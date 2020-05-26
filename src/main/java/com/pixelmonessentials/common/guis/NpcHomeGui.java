@@ -42,6 +42,6 @@ public class NpcHomeGui implements EssentialsGuis {
         EssentialsButton trainerButton=new EssentialsButton(1, trainerButtonAction);
         this.addButton(trainerButton);
         PixelmonEssentials.essentialsGuisHandler.addOrReplaceGui(player, this);
-        playerWrapper.showCustomGui(npcWrapper, gui);
+        playerWrapper.showCustomGui(gui);
     }
 }

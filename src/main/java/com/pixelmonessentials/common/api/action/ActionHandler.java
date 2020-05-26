@@ -1,9 +1,11 @@
 package com.pixelmonessentials.common.api.action;
 
 import com.pixelmonessentials.common.api.action.types.*;
+import com.pixelmonessentials.common.handler.ActionTimerTask;
 import net.minecraft.entity.player.EntityPlayerMP;
 
 import java.util.ArrayList;
+import java.util.Timer;
 
 public class ActionHandler {
     ArrayList<Action> actionTypes=new ArrayList<Action>();
@@ -42,8 +44,9 @@ public class ActionHandler {
     }
 
     public void doActions(ActionData[] data, EntityPlayerMP playerMP){
-        for(ActionData actionData: data){
-            this.doAction(actionData, playerMP);
+        Timer timer=new Timer();
+        for(int i=0;i<data.length;i++){
+            timer.schedule(new ActionTimerTask(data[i], playerMP), 100*i);
         }
     }
 

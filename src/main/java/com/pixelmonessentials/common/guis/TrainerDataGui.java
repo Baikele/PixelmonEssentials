@@ -60,6 +60,6 @@ public class TrainerDataGui implements EssentialsGuis {
         gui.addButton(9, "Cancel", 150, 215, 50, 20);
         this.buttons.add(new EssentialsButton(9, new ActionData("CLOSE_GUI", "It doesn't even matter")));
         PixelmonEssentials.essentialsGuisHandler.addOrReplaceGui(player, this);
-        playerWrapper.showCustomGui(npcWrapper, gui);
+        playerWrapper.showCustomGui(gui);
     }
 }
