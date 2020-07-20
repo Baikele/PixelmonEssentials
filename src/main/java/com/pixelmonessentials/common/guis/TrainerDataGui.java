@@ -3,34 +3,18 @@ package com.pixelmonessentials.common.guis;
 import com.pixelmonessentials.PixelmonEssentials;
 import com.pixelmonessentials.common.api.action.ActionData;
 import com.pixelmonessentials.common.api.gui.EssentialsButton;
-import com.pixelmonessentials.common.api.gui.EssentialsGuis;
+import com.pixelmonessentials.common.api.gui.bases.EssentialsGuiBase;
 import net.minecraft.entity.player.EntityPlayerMP;
 import noppes.npcs.api.wrapper.NPCWrapper;
 import noppes.npcs.api.wrapper.PlayerWrapper;
 import noppes.npcs.api.wrapper.gui.CustomGuiWrapper;
 import noppes.npcs.entity.EntityNPCInterface;
 
-import java.util.ArrayList;
-
-public class TrainerDataGui implements EssentialsGuis {
-    private static final int id=1001;
+public class TrainerDataGui extends EssentialsGuiBase {
     private static String team="None";
-    private ArrayList<EssentialsButton> buttons=new ArrayList<EssentialsButton>();
 
     public TrainerDataGui(){
-
-    }
-
-    public int getId(){
-        return this.id;
-    }
-
-    public ArrayList<EssentialsButton> getButtons(){
-        return this.buttons;
-    }
-
-    public void addButton(EssentialsButton button) {
-        this.buttons.add(button);
+        super(1001);
     }
 
     public void init(EntityPlayerMP player, EntityNPCInterface npc){
@@ -56,9 +40,9 @@ public class TrainerDataGui implements EssentialsGuis {
         gui.addLabel(7, "Victory Theme", 20, 180, 200, 20);
         gui.addTextField(7, 130, 180, 100, 20);
         gui.addButton(8, "Save", 50, 215, 50, 20);
-        this.buttons.add(new EssentialsButton(8, new ActionData("SAVE_TRAINER", npc.getUniqueID().toString())));
+        this.addButton(new EssentialsButton(8, new ActionData("SAVE_TRAINER", npc.getUniqueID().toString())));
         gui.addButton(9, "Cancel", 150, 215, 50, 20);
-        this.buttons.add(new EssentialsButton(9, new ActionData("CLOSE_GUI", "It doesn't even matter")));
+        this.addButton(new EssentialsButton(9, new ActionData("CLOSE_GUI", "It doesn't even matter")));
         PixelmonEssentials.essentialsGuisHandler.addOrReplaceGui(player, this);
         playerWrapper.showCustomGui(gui);
     }

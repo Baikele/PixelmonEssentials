@@ -1,6 +1,9 @@
 package com.pixelmonessentials.common.util;
 
 import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.common.DimensionManager;
+
+import java.io.File;
 
 public class Reference {
     public static String bold= TextFormatting.BOLD+"";
@@ -23,7 +26,4 @@ public class Reference {
     public static String white=TextFormatting.WHITE+"";
     public static String grey=TextFormatting.GRAY+"";
     public static String darkGrey=TextFormatting.DARK_GRAY+"";
-
-    public static String configDir="config/pixelmonEssentials";
-    public static String teamsDir=configDir+"/teams";
 }

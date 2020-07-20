@@ -1,30 +1,31 @@
 package com.pixelmonessentials;
 
-import com.pixelmonessentials.common.api.gui.EssentialsGuis;
 import com.pixelmonessentials.common.api.action.ActionHandler;
 import com.pixelmonessentials.common.api.gui.EssentialsGuisHandler;
 import com.pixelmonessentials.common.api.requirement.RequirementHandler;
+import com.pixelmonessentials.common.commands.CommandEspawner;
 import com.pixelmonessentials.common.commands.CommandEwand;
+import com.pixelmonessentials.common.commands.CommandPEQuest;
+import com.pixelmonessentials.common.commands.CommandRules;
 import com.pixelmonessentials.common.handler.GuiEventHandler;
+import com.pixelmonessentials.common.handler.PixelmonSpawnerEventHandler;
+import com.pixelmonessentials.common.handler.QuestEventHandler;
 import com.pixelmonessentials.common.handler.RightClickEventHandler;
+import com.pixelmonessentials.common.quests.QuestsManager;
+import com.pixelmonessentials.common.spawners.SpawnerDataManagement;
 import com.pixelmonessentials.common.teams.TeamManager;
-import net.minecraft.server.MinecraftServer;
+import com.pixelmonessentials.common.util.EssentialsLogger;
+import com.pixelmonessentials.common.util.Reference;
+import com.pixelmonmod.pixelmon.Pixelmon;
+import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.UsernameCache;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.fml.common.event.*;
+import noppes.npcs.CustomNpcs;
+import noppes.npcs.LogWriter;
 import noppes.npcs.api.wrapper.WrapperNpcAPI;
 
-import java.io.FileOutputStream;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.logging.*;
+import java.io.File;
 
 @Mod(
         modid="pixelmonessentials",
@@ -45,6 +46,10 @@ public class PixelmonEssentials {
     public static TeamManager teamManager=new TeamManager();
     public static ActionHandler actionHandler=new ActionHandler();
     public static EssentialsGuisHandler essentialsGuisHandler=new EssentialsGuisHandler();
+    public static SpawnerDataManagement spawnerDataManagement=new SpawnerDataManagement();
+    public static QuestsManager questsManager=new QuestsManager();
+    public static File configFolder=new File(".");
+    public static File dataFolder=new File(".");
 
     public PixelmonEssentials(){
     }
@@ -54,21 +59,63 @@ public class PixelmonEssentials {
         requirementHandler.init();
         actionHandler.init();
         essentialsGuisHandler.init();
-        teamManager.init();
+        questsManager.init();
     }
 
     @Mod.EventHandler
     public void preInit(FMLInitializationEvent event){
         MinecraftForge.EVENT_BUS.register(new RightClickEventHandler());
+        MinecraftForge.EVENT_BUS.register(new PixelmonSpawnerEventHandler());
+        Pixelmon.EVENT_BUS.register(new PixelmonSpawnerEventHandler());
+        Pixelmon.EVENT_BUS.register(new QuestEventHandler());
         WrapperNpcAPI.EVENT_BUS.register(new GuiEventHandler());
+    }
+
+    @Mod.EventHandler
+    public void onServerStarted(FMLServerStartedEvent event){
+        getServerSaveDirectory();
+        dataFolder=new File(PixelmonEssentials.configFolder, "data/");
+        teamManager.init();
+        spawnerDataManagement.init();
+        questsManager.loadQuests();
     }
 
     @Mod.EventHandler
     public void onServerStart(FMLServerStartingEvent event){
         event.registerServerCommand(new CommandEwand());
+        event.registerServerCommand(new CommandEspawner());
+        event.registerServerCommand(new CommandPEQuest());
+        event.registerServerCommand(new CommandRules());
     }
 
     @Mod.EventHandler
     public void postinit(FMLPostInitializationEvent event) {
+    }
+
+    @Mod.EventHandler
+    public void onServerClose(FMLServerStoppingEvent event){
+        spawnerDataManagement.save();
+        questsManager.save();
+    }
+
+    public static void getServerSaveDirectory(){
+        try {
+            File dir = new File(".");
+            if (CustomNpcs.Server != null) {
+                if (!CustomNpcs.Server.isDedicatedServer()) {
+                    dir = new File(Minecraft.getMinecraft().gameDir, "saves");
+                }
+
+                dir = new File(new File(dir, CustomNpcs.Server.getFolderName()), "pixelmonessentials/");
+            }
+
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+
+            configFolder=dir;
+        } catch (Exception var2) {
+            EssentialsLogger.info("Error getting worldsave");
+        }
     }
 }

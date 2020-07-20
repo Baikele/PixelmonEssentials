@@ -1,6 +1,15 @@
 package com.pixelmonessentials.common.api.action;
 
 import com.pixelmonessentials.common.api.action.types.*;
+import com.pixelmonessentials.common.api.action.types.generalActions.CommandAction;
+import com.pixelmonessentials.common.api.action.types.generalActions.GiveItemAction;
+import com.pixelmonessentials.common.api.action.types.guiActions.CloseGuiAction;
+import com.pixelmonessentials.common.api.action.types.guiActions.OpenGuiAction;
+import com.pixelmonessentials.common.api.action.types.questActions.ClearObjectiveAction;
+import com.pixelmonessentials.common.api.action.types.questActions.OpenObjectiveAction;
+import com.pixelmonessentials.common.api.action.types.questActions.OpenQuestAction;
+import com.pixelmonessentials.common.api.action.types.questActions.OpenQuestGuiAction;
+import com.pixelmonessentials.common.api.action.types.spawnerActions.*;
 import com.pixelmonessentials.common.handler.ActionTimerTask;
 import net.minecraft.entity.player.EntityPlayerMP;
 
@@ -11,6 +20,22 @@ public class ActionHandler {
     ArrayList<Action> actionTypes=new ArrayList<Action>();
 
     public void init(){
+        actionTypes.add(new AddSpawnDataAction());
+        actionTypes.add(new DeleteSpawnDataAction());
+        actionTypes.add(new CreateSpeciesAction());
+        actionTypes.add(new EditSpeciesAction());
+        actionTypes.add(new DeleteSpeciesAction());
+        actionTypes.add(new SaveSpeciesAction());
+        actionTypes.add(new EditTimesAction());
+        actionTypes.add(new ClearTimesAction());
+        actionTypes.add(new ReturnIndividualSpawnAction());
+        actionTypes.add(new CancelTimesAction());
+
+        actionTypes.add(new OpenQuestAction());
+        actionTypes.add(new OpenObjectiveAction());
+        actionTypes.add(new ClearObjectiveAction());
+        actionTypes.add(new OpenQuestGuiAction());
+
         actionTypes.add(new CommandAction());
         actionTypes.add(new GiveItemAction());
         actionTypes.add(new OpenGuiAction());

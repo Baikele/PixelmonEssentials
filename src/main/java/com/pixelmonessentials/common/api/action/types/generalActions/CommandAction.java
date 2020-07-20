@@ -1,18 +1,17 @@
-package com.pixelmonessentials.common.api.action.types;
+package com.pixelmonessentials.common.api.action.types.generalActions;
 
-import com.pixelmonessentials.common.api.action.Action;
+import com.pixelmonessentials.common.api.action.ActionBase;
 import net.minecraft.command.ICommandManager;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.rcon.RConConsoleSource;
 import noppes.npcs.api.wrapper.PlayerWrapper;
 
-public class CommandAction implements Action {
-    public final String name="COMMAND";
-
-    public String getName(){
-        return this.name;
+public class CommandAction extends ActionBase {
+    public CommandAction(){
+        super("COMMAND");
     }
 
+    @Override
     public void doAction(String value, EntityPlayerMP playerMP){
         PlayerWrapper playerWrapper=new PlayerWrapper(playerMP);
         String command=value.replace("@dp",playerMP.getName());

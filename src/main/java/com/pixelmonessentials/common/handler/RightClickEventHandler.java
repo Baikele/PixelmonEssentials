@@ -20,7 +20,7 @@ public class RightClickEventHandler {
             if(heldItem.getDisplayName().equals(Reference.resetText+"Essential Wand")){
                 if(event.getTarget() instanceof EntityCustomNpc){
                     event.setCanceled(true);
-                    PixelmonEssentials.essentialsGuisHandler.getGui(1000).init((EntityPlayerMP) event.getEntityPlayer(), (EntityNPCInterface) event.getTarget());
+                    //PixelmonEssentials.essentialsGuisHandler.getGui(1000).init((EntityPlayerMP) event.getEntityPlayer(), (EntityNPCInterface) event.getTarget());
                 }
             }
         }

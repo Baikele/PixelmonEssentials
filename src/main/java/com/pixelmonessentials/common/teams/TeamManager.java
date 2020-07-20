@@ -22,7 +22,7 @@ import java.util.Map;
 import java.util.Objects;
 
 public class TeamManager {
-    public File teamDir=new File(Reference.teamsDir);
+    public File teamDir;
     public ArrayList<TeamCategory> categories=new ArrayList<TeamCategory>();
     public Map<String, String> otherMoves = new HashMap();
 
@@ -41,17 +41,20 @@ public class TeamManager {
 
     public void init() {
         EssentialsLogger.info("Loading teams!");
-        if(!teamDir.exists()) {
+        teamDir=new File(PixelmonEssentials.configFolder, "teams/");
+        if(!teamDir.exists()){
             teamDir.mkdirs();
         }
-        try {
-            this.loadCategories();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        else {
+            try {
+                this.loadCategories();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            EssentialsLogger.info("Loaded teams!");
         }
-        EssentialsLogger.info("Loaded teams!");
     }
 
     public void loadCategories() throws IOException {

@@ -8,6 +8,10 @@ public class ActionData {
     public boolean closeInv;
     public RequirementData[] requirements;
 
+    public ActionData(String name){
+        this.name=name;
+    }
+
     public ActionData(String name, String value){
         this.name=name;
         this.value=value;

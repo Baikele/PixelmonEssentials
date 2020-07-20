@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public interface EssentialsGuis {
     int getId();
-    void init(EntityPlayerMP playerMP, EntityNPCInterface npc);
+    void init(EntityPlayerMP playerMP);
     ArrayList<EssentialsButton> getButtons();
     void addButton(EssentialsButton button);
 }

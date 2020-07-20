@@ -2,6 +2,11 @@ package com.pixelmonessentials.common.api.gui;
 
 import com.pixelmonessentials.common.guis.NpcHomeGui;
 import com.pixelmonessentials.common.guis.TrainerDataGui;
+import com.pixelmonessentials.common.guis.objectives.CustomObjectiveGui;
+import com.pixelmonessentials.common.guis.objectives.ObjectiveSelectionGui;
+import com.pixelmonessentials.common.guis.objectives.QuestSelectionGui;
+import com.pixelmonessentials.common.guis.spawners.IndividualSpawnGui;
+import com.pixelmonessentials.common.guis.spawners.SpawnerInfoGui;
 import net.minecraft.entity.player.EntityPlayerMP;
 
 import java.util.ArrayList;
@@ -14,6 +19,19 @@ public class EssentialsGuisHandler {
     public void init(){
         this.basicGuis.add(new NpcHomeGui());
         this.basicGuis.add(new TrainerDataGui());
+
+        this.basicGuis.add(new IndividualSpawnGui());
+        this.basicGuis.add(new SpawnerInfoGui());
+
+        this.basicGuis.add(new QuestSelectionGui());
+        this.basicGuis.add(new ObjectiveSelectionGui());
+        this.basicGuis.add(new CustomObjectiveGui());
+    }
+
+    public void removeGui(EntityPlayerMP player){
+        if(this.essentialsGuisHandler.containsKey(player)){
+            this.essentialsGuisHandler.remove(player);
+        }
     }
 
     public void addOrReplaceGui(EntityPlayerMP player, EssentialsGuis gui){

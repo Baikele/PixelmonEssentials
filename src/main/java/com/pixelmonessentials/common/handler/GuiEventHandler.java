@@ -1,65 +1,59 @@
 package com.pixelmonessentials.common.handler;
 
 import com.pixelmonessentials.PixelmonEssentials;
-import com.pixelmonessentials.common.api.action.Action;
-import com.pixelmonessentials.common.api.data.TrainerNPCData;
 import com.pixelmonessentials.common.api.gui.EssentialsButton;
+import com.pixelmonessentials.common.api.gui.EssentialsFormGui;
 import com.pixelmonessentials.common.api.gui.EssentialsGuis;
-import com.pixelmonessentials.common.guis.TrainerDataGui;
+import com.pixelmonessentials.common.api.gui.EssentialsScrollGui;
+import com.pixelmonessentials.common.api.gui.bases.EssentialsMultiselectScrollGuiBase;
 import com.pixelmonessentials.common.util.EssentialsLogger;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import noppes.npcs.api.INbt;
 import noppes.npcs.api.event.CustomGuiEvent;
-import noppes.npcs.api.gui.ICustomGuiComponent;
-import noppes.npcs.client.gui.custom.interfaces.IGuiComponent;
-import noppes.npcs.entity.EntityNPCInterface;
-
-import java.util.UUID;
 
 public class GuiEventHandler {
     @SubscribeEvent
     public void onGuiButton(CustomGuiEvent.ButtonEvent event){
         EssentialsGuis gui= PixelmonEssentials.essentialsGuisHandler.getGui(event.player.getMCEntity());
         if(gui!=null){
-            for(EssentialsButton button: gui.getButtons()){
-                if(button.getId()==event.buttonId){
-                    if(PixelmonEssentials.actionHandler.getType(button.getAction()).getName().equals("SAVE_TRAINER")){
-                        TrainerNPCData trainerData=new TrainerNPCData();
-                        /*for(int i=0;i<event.gui.getComponents().size();i++){
-                            ICustomGuiComponent component=event.gui.getComponent(i);
-                            switch (i){
-                                case 1:
-                                    trainerData.setInitDialogId(Integer.parseInt(component..getString("text")));
-                                    break;
-                                case 2:
-                                    trainerData.setWinDialogId(Integer.parseInt(nbt.getString("text")));
-                                    break;
-                                case 3:
-                                    trainerData.setLossDialogId(Integer.parseInt(nbt.getString("text")));
-                                    break;
-                                case 5:
-                                    trainerData.setEncounterTheme(nbt.getString("text"));
-                                    break;
-                                case 6:
-                                    trainerData.setBattleTheme(nbt.getString("text"));
-                                    break;
-                                case 7:
-                                    trainerData.setVictoryTheme(nbt.getString("text"));
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }*/
-                        trainerData.setNpcTrainerData((EntityNPCInterface) event.player.getMCEntity().getServerWorld().getEntityFromUuid(UUID.fromString(button.getAction().value)));
-                    }
-                    else{
-                        PixelmonEssentials.actionHandler.doActions(button.getActions(), event.player.getMCEntity());
+            if(gui.getId()!=event.gui.getID()){
+                return;
+            }
+            if(gui instanceof EssentialsFormGui){
+                if(event.buttonId==((EssentialsFormGui) gui).getSubmitButton()){
+                    ((EssentialsFormGui) gui).sendForm(event.player.getMCEntity());
+                    return;
+                }
+            }
+            EssentialsButton button=null;
+            for(int i=0;i<gui.getButtons().size();i++){
+                if(gui.getButtons().get(i).getId()==event.buttonId){
+                    button=gui.getButtons().get(i);
+                    break;
+                }
+            }
+            PixelmonEssentials.actionHandler.doActions(button.getActions(), event.player.getMCEntity());
+        }
+    }
+
+    @SubscribeEvent
+    public void onScrollChange(CustomGuiEvent.ScrollEvent event){
+        EssentialsGuis gui=PixelmonEssentials.essentialsGuisHandler.getGui(event.player.getMCEntity());
+        if(gui!=null){
+            if(gui.getId()!=event.gui.getID()){
+                return;
+            }
+            if(gui instanceof EssentialsMultiselectScrollGuiBase){
+                for(int scroll:((EssentialsMultiselectScrollGuiBase) gui).getMultiselectScrolls()){
+                    if(scroll==event.scrollId){
+                        ((EssentialsMultiselectScrollGuiBase) gui).updateFromMultiSelect(event.selection);
+                        return;
                     }
                 }
             }
-        }
-        else{
-            EssentialsLogger.info("???");
+            if(gui instanceof EssentialsScrollGui){
+                ((EssentialsScrollGui) gui).setIndex(event.scrollId, event.selection[0]);
+                ((EssentialsScrollGui) gui).updateScroll(event.scrollId, event.player.getMCEntity());
+            }
         }
     }
 }
