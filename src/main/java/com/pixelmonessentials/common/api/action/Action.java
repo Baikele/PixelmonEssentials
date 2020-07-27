@@ -4,5 +4,5 @@ import net.minecraft.entity.player.EntityPlayerMP;
 
 public interface Action {
     public String getName();
-    public void doAction(String value, EntityPlayerMP player);
+    public void doAction(EntityPlayerMP player, ActionData data);
 }

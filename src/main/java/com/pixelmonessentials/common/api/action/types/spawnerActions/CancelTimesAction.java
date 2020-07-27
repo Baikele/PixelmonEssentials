@@ -2,6 +2,7 @@ package com.pixelmonessentials.common.api.action.types.spawnerActions;
 
 import com.pixelmonessentials.PixelmonEssentials;
 import com.pixelmonessentials.common.api.action.ActionBase;
+import com.pixelmonessentials.common.api.action.ActionData;
 import com.pixelmonessentials.common.api.gui.EssentialsGuis;
 import com.pixelmonessentials.common.guis.spawners.IndividualSpawnGui;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -13,13 +14,14 @@ public class CancelTimesAction extends ActionBase {
         super("CANCEL_TIMES");
     }
 
-    public void doAction(String value, EntityPlayerMP playerMP){
+    @Override
+    public void doAction(EntityPlayerMP playerMP, ActionData data){
         EssentialsGuis gui= PixelmonEssentials.essentialsGuisHandler.getGui(playerMP);
         if(gui instanceof IndividualSpawnGui){
             ((IndividualSpawnGui) gui).setSpawnTimes(((IndividualSpawnGui) gui).getSpawnTimes());
             CustomGuiWrapper guiWrapper=((IndividualSpawnGui) gui).createGui(playerMP);
             PlayerWrapper playerWrapper=new PlayerWrapper(playerMP);
-            playerWrapper.showCustomGui(guiWrapper);
+            guiWrapper.update(playerWrapper);
         }
     }
 }

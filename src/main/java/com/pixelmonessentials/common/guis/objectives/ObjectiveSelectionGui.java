@@ -6,15 +6,11 @@ import com.pixelmonessentials.common.api.gui.EssentialsButton;
 import com.pixelmonessentials.common.api.gui.bases.EssentialsScrollGuiBase;
 import com.pixelmonessentials.common.api.quests.Objective;
 import com.pixelmonessentials.common.api.quests.ObjectiveData;
-import com.pixelmonessentials.common.api.quests.objectiveData.QuestObjectiveData;
-import com.pixelmonessentials.common.util.EssentialsLogger;
 import net.minecraft.entity.player.EntityPlayerMP;
-import noppes.npcs.api.handler.data.IQuestObjective;
 import noppes.npcs.api.wrapper.PlayerWrapper;
 import noppes.npcs.api.wrapper.gui.CustomGuiWrapper;
 import noppes.npcs.controllers.CustomGuiController;
 import noppes.npcs.controllers.data.Quest;
-import noppes.npcs.entity.EntityNPCInterface;
 import noppes.npcs.quests.QuestManual;
 
 import java.util.ArrayList;
@@ -34,9 +30,9 @@ public class ObjectiveSelectionGui extends EssentialsScrollGuiBase {
         super(1005);
         this.quest=quest;
         this.index=-1;
-        this.addButton(new EssentialsButton(500, new ActionData("OPEN_OBJECTIVE", "")));
-        this.addButton(new EssentialsButton(501, new ActionData("CLEAR_OBJECTIVE", "")));
-        this.addButton(new EssentialsButton(502, new ActionData("QUEST_GUI", "")));
+        this.addButton(new EssentialsButton(500, new ActionData("OPEN_OBJECTIVE")));
+        this.addButton(new EssentialsButton(501, new ActionData("CLEAR_OBJECTIVE")));
+        this.addButton(new EssentialsButton(502, new ActionData("QUEST_GUI")));
     }
 
     public int getIndex(){

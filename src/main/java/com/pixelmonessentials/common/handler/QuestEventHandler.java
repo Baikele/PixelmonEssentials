@@ -8,6 +8,7 @@ import com.pixelmonessentials.common.api.quests.objectives.CaughtObjective;
 import com.pixelmonessentials.common.api.quests.objectives.DefeatPokemonObjective;
 import com.pixelmonessentials.common.api.quests.objectives.PartyObjective;
 import com.pixelmonessentials.common.util.EssentialsLogger;
+import com.pixelmonmod.pixelmon.Pixelmon;
 import com.pixelmonmod.pixelmon.api.events.BeatWildPixelmonEvent;
 import com.pixelmonmod.pixelmon.api.events.PokedexEvent;
 import com.pixelmonmod.pixelmon.api.events.storage.ChangeStorageEvent;
@@ -42,7 +43,7 @@ public class QuestEventHandler {
     public void onDexRegister(PokedexEvent event){
         EssentialsLogger.info("event");
         CaughtObjective objective=(CaughtObjective) PixelmonEssentials.questsManager.getObjectiveFromName("CAUGHT");
-        EntityPlayerMP playerMP=FMLServerHandler.instance().getServer().getPlayerList().getPlayerByUUID(event.uuid);
+        EntityPlayerMP playerMP=Pixelmon.storageManager.getParty(event.uuid).getPlayer();
         PlayerWrapper playerWrapper=new PlayerWrapper(playerMP);
         IQuest[] quests=playerWrapper.getActiveQuests();
         for(IQuest quest:quests){
@@ -55,12 +56,14 @@ public class QuestEventHandler {
     @SubscribeEvent
     public void onPartyChange(ChangeStorageEvent event){
         PartyObjective objective=(PartyObjective) PixelmonEssentials.questsManager.getObjectiveFromName("PARTY");
-        EntityPlayerMP playerMP=FMLServerHandler.instance().getServer().getPlayerList().getPlayerByUUID(event.newStorage.uuid);
-        PlayerWrapper playerWrapper=new PlayerWrapper(playerMP);
-        IQuest[] quests=playerWrapper.getActiveQuests();
-        for(IQuest quest:quests){
-            if(objective.getQuestFromId(quest.getId())!=null){
-                objective.calculateProgress(objective.getQuestFromId(quest.getId()), playerMP);
+        EntityPlayerMP playerMP=Pixelmon.storageManager.getParty(event.newStorage.uuid).getPlayer();
+        if(playerMP!=null){
+            PlayerWrapper playerWrapper=new PlayerWrapper(playerMP);
+            IQuest[] quests=playerWrapper.getActiveQuests();
+            for(IQuest quest:quests){
+                if(objective.getQuestFromId(quest.getId())!=null){
+                    objective.calculateProgress(objective.getQuestFromId(quest.getId()), playerMP);
+                }
             }
         }
     }

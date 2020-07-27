@@ -39,7 +39,12 @@ public class PixelmonSpawnerEventHandler {
             if(id!=0){
                 SpawnData data=PixelmonEssentials.spawnerDataManagement.getSpawnsFromId(id);
                 IndividualSpawnData spawnData=data.getSpawnFromTime(event.spawner.getWorld().getWorldTime());
-                PokemonSpec spec=new PokemonSpec(spawnData.getSpeciesName());
+                String[] specs=new String[spawnData.getSpecs().length+1];
+                specs[0]=spawnData.getSpeciesName();
+                for(int i=0;i<spawnData.getSpecs().length;i++){
+                    specs[i+1]=spawnData.getSpecs()[i];
+                }
+                PokemonSpec spec=new PokemonSpec(specs);
                 spec.level=spawnData.generateLevel();
                 try {
                     Method spawnPixelmon=TileEntityPixelmonSpawner.class.getDeclaredMethod("spawnPixelmon", PokemonSpec.class);

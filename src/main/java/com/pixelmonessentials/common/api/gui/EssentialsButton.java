@@ -1,6 +1,5 @@
 package com.pixelmonessentials.common.api.gui;
 
-import com.pixelmonessentials.common.api.action.Action;
 import com.pixelmonessentials.common.api.action.ActionData;
 
 public class EssentialsButton {

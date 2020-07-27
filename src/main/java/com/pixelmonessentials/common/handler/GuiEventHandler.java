@@ -1,10 +1,7 @@
 package com.pixelmonessentials.common.handler;
 
 import com.pixelmonessentials.PixelmonEssentials;
-import com.pixelmonessentials.common.api.gui.EssentialsButton;
-import com.pixelmonessentials.common.api.gui.EssentialsFormGui;
-import com.pixelmonessentials.common.api.gui.EssentialsGuis;
-import com.pixelmonessentials.common.api.gui.EssentialsScrollGui;
+import com.pixelmonessentials.common.api.gui.*;
 import com.pixelmonessentials.common.api.gui.bases.EssentialsMultiselectScrollGuiBase;
 import com.pixelmonessentials.common.util.EssentialsLogger;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -53,6 +50,16 @@ public class GuiEventHandler {
             if(gui instanceof EssentialsScrollGui){
                 ((EssentialsScrollGui) gui).setIndex(event.scrollId, event.selection[0]);
                 ((EssentialsScrollGui) gui).updateScroll(event.scrollId, event.player.getMCEntity());
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void onGuiClose(CustomGuiEvent.CloseEvent event){
+        EssentialsGuis gui=PixelmonEssentials.essentialsGuisHandler.getGui(event.player.getMCEntity());
+        if(gui!=null){
+            if(gui.getId()==event.gui.getID()&&!(gui instanceof EssentialsPersistentGui)){
+                PixelmonEssentials.essentialsGuisHandler.removeGui(event.player.getMCEntity());
             }
         }
     }

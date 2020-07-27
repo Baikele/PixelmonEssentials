@@ -47,9 +47,15 @@ public class QuestsManager {
             }
     }
 
-    public void loadQuestData() throws FileNotFoundException {
+    public void loadQuestData() throws IOException {
         InputStream inputStream=new FileInputStream(this.questFile);
-        JsonArray array=new JsonParser().parse(new InputStreamReader(inputStream, StandardCharsets.UTF_8)).getAsJsonArray();
+        JsonArray array=null;
+        try{
+            array=new JsonParser().parse(new InputStreamReader(inputStream, StandardCharsets.UTF_8)).getAsJsonArray();
+        }
+        catch (IllegalStateException e){
+            return;
+        }
         for(JsonElement json:array){
             JsonObject object=json.getAsJsonObject();
             if(object.has("objective")&&object.has("quests")){

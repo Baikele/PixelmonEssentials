@@ -9,7 +9,12 @@ import com.pixelmonessentials.common.api.action.types.questActions.ClearObjectiv
 import com.pixelmonessentials.common.api.action.types.questActions.OpenObjectiveAction;
 import com.pixelmonessentials.common.api.action.types.questActions.OpenQuestAction;
 import com.pixelmonessentials.common.api.action.types.questActions.OpenQuestGuiAction;
+import com.pixelmonessentials.common.api.action.types.rulesActions.EditRuleAction;
+import com.pixelmonessentials.common.api.action.types.rulesActions.NewRuleAction;
+import com.pixelmonessentials.common.api.action.types.rulesActions.ReloadRulesAction;
+import com.pixelmonessentials.common.api.action.types.rulesActions.RemoveRuleAction;
 import com.pixelmonessentials.common.api.action.types.spawnerActions.*;
+import com.pixelmonessentials.common.api.action.types.trainerActions.*;
 import com.pixelmonessentials.common.handler.ActionTimerTask;
 import net.minecraft.entity.player.EntityPlayerMP;
 
@@ -36,11 +41,28 @@ public class ActionHandler {
         actionTypes.add(new ClearObjectiveAction());
         actionTypes.add(new OpenQuestGuiAction());
 
+        actionTypes.add(new NewRuleAction());
+        actionTypes.add(new EditRuleAction());
+        actionTypes.add(new RemoveRuleAction());
+        actionTypes.add(new ReloadRulesAction());
+
+        actionTypes.add(new EditTrainerAction());
+        actionTypes.add(new SelectTeamAction());
+        actionTypes.add(new ReturnToTeamAction());
+        actionTypes.add(new SetShownPokemonAction());
+        actionTypes.add(new ReturnToTrainerAction());
+        actionTypes.add(new SaveTeamAction());
+        actionTypes.add(new SelectRulesAction());
+        actionTypes.add(new ClearRulesAction());
+        actionTypes.add(new SaveRulesAction());
+        actionTypes.add(new CancelRulesAction());
+        actionTypes.add(new FlipLosAction());
+        actionTypes.add(new OtherSettingsAction());
+
         actionTypes.add(new CommandAction());
         actionTypes.add(new GiveItemAction());
         actionTypes.add(new OpenGuiAction());
         actionTypes.add(new CloseGuiAction());
-        actionTypes.add(new SaveTrainerAction());
     }
 
     public Action getType(String type){
@@ -65,7 +87,7 @@ public class ActionHandler {
         Action action=getType(data);
         if(data.closeInv)
             playerMP.closeScreen();
-        action.doAction(data.value, playerMP);
+        action.doAction(playerMP, data);
     }
 
     public void doActions(ActionData[] data, EntityPlayerMP playerMP){

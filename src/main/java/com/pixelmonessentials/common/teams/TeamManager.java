@@ -39,6 +39,23 @@ public class TeamManager {
         otherMoves.put("Solar Beam", "SolarBeam");
     }
 
+    public TeamCategory getCategory(String name){
+        for(TeamCategory category:this.categories){
+            if(category.getName().equals(name)){
+                return category;
+            }
+        }
+        return null;
+    }
+
+    public String[] getCategoryNames(){
+        String[] categories=new String[this.categories.size()];
+        for(int i=0;i<categories.length;i++){
+            categories[i]=this.categories.get(i).getName();
+        }
+        return categories;
+    }
+
     public void init() {
         EssentialsLogger.info("Loading teams!");
         teamDir=new File(PixelmonEssentials.configFolder, "teams/");
@@ -62,7 +79,9 @@ public class TeamManager {
         for(File f: Objects.requireNonNull(this.teamDir.listFiles())){
             if(f.getName().endsWith(".txt")){
                 TeamCategory category=new TeamCategory(f.getName().replace(".txt", ""));
+                EssentialsLogger.info(category.getName());
                 category=loadTeams(category, f);
+                this.categories.add(category);
             }
         }
     }
@@ -77,13 +96,10 @@ public class TeamManager {
         {
             if(readLine.startsWith("===")){
                 if(pokemonSequence){
+                    EssentialsLogger.info(teamName);
                     category.getTeam(teamName).addMember(convertPokemon(pokemon));
                     pokemon.clear();
                     pokemonSequence = false;
-                    category.teams.add(category.getTeam(teamName));
-                }
-                else if(!teamName.equals("")){
-                    category.teams.add(category.getTeam(teamName));
                 }
                 teamName = readLine.replace("===","");
                 teamName = teamName.replace(" ","");
@@ -94,6 +110,7 @@ public class TeamManager {
                     pokemonSequence = true;
                 }
                 if (readLine.equals("") && pokemonSequence) {
+                    EssentialsLogger.info(teamName);
                     category.getTeam(teamName).addMember(convertPokemon(pokemon));
                     pokemon.clear();
                     pokemonSequence = false;
@@ -103,9 +120,10 @@ public class TeamManager {
                 }
             }
         }
-        if(pokemonSequence)
+        if(pokemonSequence) {
+            EssentialsLogger.info(teamName);
             category.getTeam(teamName).addMember(convertPokemon(pokemon));
-        category.teams.add(category.getTeam(teamName));
+        }
         return category;
     }
 
@@ -136,6 +154,8 @@ public class TeamManager {
             }
         }
         Moveset moveset = new Moveset();
+        IVStore ivStore = new IVStore(new int[]{31, 31, 31, 31, 31, 31});
+        pokemonData.getStats().ivs = ivStore;
         for(int i=1;i<pokemon.size();i++){
             line=pokemon.get(i);
             line=line.replace("  ","");
@@ -188,7 +208,6 @@ public class TeamManager {
             else if(line.startsWith("IVs:"))
             {
                 line = line.replace("IVs: ","");
-                IVStore ivStore = pokemonData.getStats().ivs;
                 for(String ivs : line.split(" / "))
                 {
                     int iv = Integer.parseInt(ivs.split(" ")[0]);
@@ -229,8 +248,13 @@ public class TeamManager {
             }
         }
         if(moveset!=null){
-            for(int i=0;i<moveset.size();i++){
-                pokemonData.getMoveset().set(i, moveset.get(i));
+            for(int i=0;i<4;i++){
+                if(i<moveset.size()){
+                    pokemonData.getMoveset().set(i, moveset.get(i));
+                }
+                else{
+                    pokemonData.getMoveset().set(i, null);
+                }
             }
         }
         return pokemonData;

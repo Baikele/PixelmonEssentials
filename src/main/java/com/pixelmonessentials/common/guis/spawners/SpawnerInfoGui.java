@@ -3,18 +3,12 @@ package com.pixelmonessentials.common.guis.spawners;
 import com.pixelmonessentials.PixelmonEssentials;
 import com.pixelmonessentials.common.api.action.ActionData;
 import com.pixelmonessentials.common.api.gui.EssentialsButton;
-import com.pixelmonessentials.common.api.gui.EssentialsGuis;
-import com.pixelmonessentials.common.api.gui.EssentialsScrollGui;
 import com.pixelmonessentials.common.api.gui.bases.EssentialsScrollGuiBase;
 import com.pixelmonessentials.common.spawners.SpawnData;
-import com.pixelmonessentials.common.util.DaytimeUtils;
 import net.minecraft.entity.player.EntityPlayerMP;
 import noppes.npcs.api.wrapper.PlayerWrapper;
 import noppes.npcs.api.wrapper.gui.CustomGuiWrapper;
 import noppes.npcs.controllers.CustomGuiController;
-import noppes.npcs.entity.EntityNPCInterface;
-
-import java.util.ArrayList;
 
 public class SpawnerInfoGui extends EssentialsScrollGuiBase {
     private String[] spawners;
@@ -28,11 +22,11 @@ public class SpawnerInfoGui extends EssentialsScrollGuiBase {
         this.speciesIndex=-1;
         this.spawners=this.getSpawnIds();
         this.species=this.getSpeciesSpawns();
-        this.addButton(new EssentialsButton(500, new ActionData("ADD_SPAWN", "")));
-        this.addButton(new EssentialsButton(501, new ActionData("DELETE_SPAWN", "")));
-        this.addButton(new EssentialsButton(502, new ActionData("CREATE_SPECIES", "")));
-        this.addButton(new EssentialsButton(503, new ActionData("DELETE_SPECIES", "")));
-        this.addButton(new EssentialsButton(504, new ActionData("EDIT_SPECIES", "")));
+        this.addButton(new EssentialsButton(500, new ActionData("ADD_SPAWN")));
+        this.addButton(new EssentialsButton(501, new ActionData("DELETE_SPAWN")));
+        this.addButton(new EssentialsButton(502, new ActionData("CREATE_SPECIES")));
+        this.addButton(new EssentialsButton(503, new ActionData("DELETE_SPECIES")));
+        this.addButton(new EssentialsButton(504, new ActionData("EDIT_SPECIES")));
     }
 
     public int getIdIndex(){

@@ -13,6 +13,7 @@ public class EssentialsGuiBase implements EssentialsGuis {
 
     public EssentialsGuiBase(int id){
         this.id=id;
+        this.buttons=new ArrayList<EssentialsButton>();
     }
 
     public int getId(){

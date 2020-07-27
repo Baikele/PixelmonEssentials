@@ -2,6 +2,7 @@ package com.pixelmonessentials.common.api.action.types.guiActions;
 
 import com.pixelmonessentials.common.api.action.Action;
 import com.pixelmonessentials.common.api.action.ActionBase;
+import com.pixelmonessentials.common.api.action.ActionData;
 import net.minecraft.entity.player.EntityPlayerMP;
 
 public class CloseGuiAction extends ActionBase {
@@ -10,7 +11,7 @@ public class CloseGuiAction extends ActionBase {
     }
 
     @Override
-    public void doAction(String value, EntityPlayerMP playerMP){
+    public void doAction(EntityPlayerMP playerMP, ActionData data){
         playerMP.closeScreen();
     }
 }

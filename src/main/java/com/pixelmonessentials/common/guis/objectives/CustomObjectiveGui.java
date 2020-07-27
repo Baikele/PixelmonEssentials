@@ -5,17 +5,13 @@ import com.pixelmonessentials.common.api.action.ActionData;
 import com.pixelmonessentials.common.api.gui.EssentialsButton;
 import com.pixelmonessentials.common.api.gui.EssentialsFormGui;
 import com.pixelmonessentials.common.api.gui.bases.EssentialsScrollGuiBase;
-import com.pixelmonessentials.common.api.quests.Objective;
 import com.pixelmonessentials.common.api.quests.ObjectiveData;
-import com.pixelmonessentials.common.util.EssentialsLogger;
 import net.minecraft.entity.player.EntityPlayerMP;
 import noppes.npcs.api.wrapper.PlayerWrapper;
-import noppes.npcs.api.wrapper.gui.CustomGuiComponentWrapper;
 import noppes.npcs.api.wrapper.gui.CustomGuiScrollWrapper;
 import noppes.npcs.api.wrapper.gui.CustomGuiWrapper;
 import noppes.npcs.controllers.CustomGuiController;
 import noppes.npcs.controllers.data.Quest;
-import noppes.npcs.entity.EntityNPCInterface;
 import noppes.npcs.quests.QuestManual;
 
 import java.util.ArrayList;
@@ -35,7 +31,6 @@ public class CustomObjectiveGui extends EssentialsScrollGuiBase implements Essen
     public CustomObjectiveGui(){
         super(1006);
         this.submitButton=500;
-        this.addButton(new EssentialsButton(501, new ActionData("OPEN_QUEST", "")));
     }
 
     public CustomObjectiveGui(Quest quest, int objective){
@@ -47,7 +42,7 @@ public class CustomObjectiveGui extends EssentialsScrollGuiBase implements Essen
         this.typeIndex=-1;
         this.dataTypes=new ArrayList<ObjectiveData>();
         this.extraScrolls=new HashMap<Integer, Integer>();
-        this.addButton(new EssentialsButton(501, new ActionData("OPEN_QUEST", "")));
+        this.addButton(new EssentialsButton(501, new ActionData("OPEN_QUEST")));
     }
 
     public HashMap<Integer, Integer> getExtraScrolls(){

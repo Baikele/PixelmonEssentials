@@ -8,6 +8,7 @@ public class TeamCategory {
 
     public TeamCategory(String name){
         this.name=name;
+        this.teams=new ArrayList<Team>();
     }
 
     public String getName(){
@@ -29,5 +30,13 @@ public class TeamCategory {
             }
         }
         return null;
+    }
+
+    public String[] getTeamNames(){
+        String[] teams=new String[this.teams.size()];
+        for(int i=0;i<teams.length;i++){
+            teams[i]=this.teams.get(i).getName();
+        }
+        return teams;
     }
 }

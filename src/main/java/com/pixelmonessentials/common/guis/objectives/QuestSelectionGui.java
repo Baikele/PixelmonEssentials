@@ -4,7 +4,6 @@ import com.pixelmonessentials.PixelmonEssentials;
 import com.pixelmonessentials.common.api.action.ActionData;
 import com.pixelmonessentials.common.api.gui.EssentialsButton;
 import com.pixelmonessentials.common.api.gui.bases.EssentialsScrollGuiBase;
-import com.pixelmonessentials.common.util.EssentialsLogger;
 import net.minecraft.entity.player.EntityPlayerMP;
 import noppes.npcs.api.handler.data.IQuest;
 import noppes.npcs.api.wrapper.PlayerWrapper;
@@ -13,7 +12,6 @@ import noppes.npcs.controllers.CustomGuiController;
 import noppes.npcs.controllers.QuestController;
 import noppes.npcs.controllers.data.Quest;
 import noppes.npcs.controllers.data.QuestCategory;
-import noppes.npcs.entity.EntityNPCInterface;
 import noppes.npcs.quests.QuestManual;
 
 import java.util.ArrayList;
@@ -31,7 +29,7 @@ public class QuestSelectionGui extends EssentialsScrollGuiBase {
         super(1004);
         this.categoryList=this.getCategories();
         this.manualQuests=new ArrayList<Quest>();
-        this.addButton(new EssentialsButton(500, new ActionData("OPEN_QUEST", "")));
+        this.addButton(new EssentialsButton(500, new ActionData("OPEN_QUEST")));
     }
 
     public int getCategoryIndex(){

@@ -2,6 +2,7 @@ package com.pixelmonessentials.common.api.action.types.questActions;
 
 import com.pixelmonessentials.PixelmonEssentials;
 import com.pixelmonessentials.common.api.action.ActionBase;
+import com.pixelmonessentials.common.api.action.ActionData;
 import com.pixelmonessentials.common.api.gui.EssentialsGuis;
 import com.pixelmonessentials.common.guis.objectives.CustomObjectiveGui;
 import com.pixelmonessentials.common.guis.objectives.ObjectiveSelectionGui;
@@ -15,7 +16,7 @@ public class OpenObjectiveAction extends ActionBase {
     }
 
     @Override
-    public void doAction(String value, EntityPlayerMP playerMP){
+    public void doAction(EntityPlayerMP playerMP, ActionData data){
         EssentialsGuis gui= PixelmonEssentials.essentialsGuisHandler.getGui(playerMP);
         if(gui instanceof ObjectiveSelectionGui){
             CustomObjectiveGui newGui=new CustomObjectiveGui(((ObjectiveSelectionGui) gui).getQuest(), ((ObjectiveSelectionGui) gui).getIndex());

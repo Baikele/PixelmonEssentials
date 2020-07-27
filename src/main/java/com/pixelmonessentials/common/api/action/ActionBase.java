@@ -13,6 +13,6 @@ public class ActionBase implements Action {
         return this.name;
     }
 
-    public void doAction(String value, EntityPlayerMP playerMP){
+    public void doAction(EntityPlayerMP playerMP, ActionData data){
     }
 }

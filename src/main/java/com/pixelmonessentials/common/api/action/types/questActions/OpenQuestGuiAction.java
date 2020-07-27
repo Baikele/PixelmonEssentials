@@ -1,6 +1,7 @@
 package com.pixelmonessentials.common.api.action.types.questActions;
 
 import com.pixelmonessentials.common.api.action.ActionBase;
+import com.pixelmonessentials.common.api.action.ActionData;
 import com.pixelmonessentials.common.guis.objectives.QuestSelectionGui;
 import net.minecraft.entity.player.EntityPlayerMP;
 
@@ -10,7 +11,7 @@ public class OpenQuestGuiAction extends ActionBase {
     }
 
     @Override
-    public void doAction(String value, EntityPlayerMP playerMP){
+    public void doAction(EntityPlayerMP playerMP, ActionData data){
         QuestSelectionGui gui=new QuestSelectionGui();
         gui.init(playerMP);
     }

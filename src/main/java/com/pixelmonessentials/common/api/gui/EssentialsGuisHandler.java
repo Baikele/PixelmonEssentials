@@ -2,6 +2,10 @@ package com.pixelmonessentials.common.api.gui;
 
 import com.pixelmonessentials.common.guis.NpcHomeGui;
 import com.pixelmonessentials.common.guis.TrainerDataGui;
+import com.pixelmonessentials.common.guis.battles.CustomRulesGui;
+import com.pixelmonessentials.common.guis.battles.SelectTeamGui;
+import com.pixelmonessentials.common.guis.battles.TrainerRulesGui;
+import com.pixelmonessentials.common.guis.npc.OtherSettingsGui;
 import com.pixelmonessentials.common.guis.objectives.CustomObjectiveGui;
 import com.pixelmonessentials.common.guis.objectives.ObjectiveSelectionGui;
 import com.pixelmonessentials.common.guis.objectives.QuestSelectionGui;
@@ -26,6 +30,11 @@ public class EssentialsGuisHandler {
         this.basicGuis.add(new QuestSelectionGui());
         this.basicGuis.add(new ObjectiveSelectionGui());
         this.basicGuis.add(new CustomObjectiveGui());
+
+        this.basicGuis.add(new CustomRulesGui());
+        this.basicGuis.add(new SelectTeamGui());
+        this.basicGuis.add(new TrainerRulesGui());
+        this.basicGuis.add(new OtherSettingsGui());
     }
 
     public void removeGui(EntityPlayerMP player){

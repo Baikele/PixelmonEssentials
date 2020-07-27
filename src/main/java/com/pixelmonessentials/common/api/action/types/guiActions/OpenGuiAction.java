@@ -3,6 +3,9 @@ package com.pixelmonessentials.common.api.action.types.guiActions;
 import com.pixelmonessentials.PixelmonEssentials;
 import com.pixelmonessentials.common.api.action.Action;
 import com.pixelmonessentials.common.api.action.ActionBase;
+import com.pixelmonessentials.common.api.action.ActionData;
+import com.pixelmonessentials.common.api.action.datatypes.ActionIdData;
+import com.pixelmonessentials.common.api.action.datatypes.ActionNpcGuiData;
 import com.pixelmonessentials.common.api.gui.EssentialsGuis;
 import net.minecraft.entity.player.EntityPlayerMP;
 import noppes.npcs.entity.EntityNPCInterface;
@@ -15,16 +18,18 @@ public class OpenGuiAction extends ActionBase {
     }
 
     @Override
-    public void doAction(String value, EntityPlayerMP player){
-        String[] values=value.split("@");
-        EntityNPCInterface npc=null;
-        if(!values[0].equals("null")) {
-            UUID uuid = UUID.fromString(values[0]);
-            npc = (EntityNPCInterface) player.getServerWorld().getEntityFromUuid(uuid);
+    public void doAction(EntityPlayerMP player, ActionData data){
+        if(data instanceof ActionNpcGuiData){
+            EntityNPCInterface npc=((ActionNpcGuiData) data).getNpc();
+            int id=((ActionNpcGuiData) data).getId();
+            EssentialsGuis gui= PixelmonEssentials.essentialsGuisHandler.getGui(((ActionIdData) data).getId());
+            player.closeScreen();
+            gui.init(player);
         }
-        int id=Integer.parseInt(values[1]);
-        EssentialsGuis gui= PixelmonEssentials.essentialsGuisHandler.getGui(id);
-        player.closeScreen();
-        gui.init(player);
+        else if(data instanceof ActionIdData){
+            EssentialsGuis gui= PixelmonEssentials.essentialsGuisHandler.getGui(((ActionIdData) data).getId());
+            player.closeScreen();
+            gui.init(player);
+        }
     }
 }

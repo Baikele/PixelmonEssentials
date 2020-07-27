@@ -17,10 +17,12 @@ public class RightClickEventHandler {
     public void onRightClick(PlayerInteractEvent.EntityInteract event){
         ItemStack heldItem=event.getEntityPlayer().getHeldItemMainhand();
         if((heldItem.getItem().getRegistryName()+"").equals("minecraft:wooden_hoe")){
-            if(heldItem.getDisplayName().equals(Reference.resetText+"Essential Wand")){
+            if(heldItem.getDisplayName().equals(Reference.resetText+"Essential Wand")&&heldItem.getTagCompound().hasKey("Unbreakable")){
                 if(event.getTarget() instanceof EntityCustomNpc){
                     event.setCanceled(true);
-                    //PixelmonEssentials.essentialsGuisHandler.getGui(1000).init((EntityPlayerMP) event.getEntityPlayer(), (EntityNPCInterface) event.getTarget());
+                    NpcHomeGui gui=new NpcHomeGui();
+                    gui.setNpc((EntityNPCInterface) event.getTarget());
+                    gui.init((EntityPlayerMP) event.getEntityPlayer());
                 }
             }
         }

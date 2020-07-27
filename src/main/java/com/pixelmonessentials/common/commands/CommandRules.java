@@ -1,5 +1,6 @@
 package com.pixelmonessentials.common.commands;
 
+import com.pixelmonessentials.common.guis.battles.CustomRulesGui;
 import com.pixelmonmod.pixelmon.comm.packetHandlers.OpenScreen;
 import com.pixelmonmod.pixelmon.enums.EnumGuiScreen;
 import net.minecraft.command.CommandBase;
@@ -20,7 +21,8 @@ public class CommandRules extends CommandBase {
 
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException{
         if(args.length==0&&sender instanceof EntityPlayerMP){
-            OpenScreen.open((EntityPlayerMP)sender, EnumGuiScreen.BattleRulesPlayer, 999, 1);
+            CustomRulesGui gui=new CustomRulesGui();
+            gui.init((EntityPlayerMP) sender);
         }
         else {
             throw new WrongUsageException(getUsage(sender), new Object[0]);

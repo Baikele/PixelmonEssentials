@@ -8,15 +8,16 @@ import net.minecraft.command.WrongUsageException;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 
 public class CommandEwand extends CommandBase {
     public String getName(){
-        return "ewand";
+        return "pewand";
     }
 
     public String getUsage(ICommandSender sender){
-        return "/ewand [player]";
+        return "/pewand [player]";
     }
 
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
@@ -28,6 +29,7 @@ public class CommandEwand extends CommandBase {
             else{
                 Item item = getItemByText(sender, "minecraft:wooden_hoe");
                 ItemStack itemstack = new ItemStack(item);
+                itemstack.getTagCompound().setBoolean("Ewand", true);
                 itemstack.getTagCompound().setBoolean("Unbreakable", true);
                 itemstack.setStackDisplayName(Reference.resetText+"Essential Wand");
                 playerMP.addItemStackToInventory(itemstack);
@@ -37,6 +39,8 @@ public class CommandEwand extends CommandBase {
             EntityPlayerMP player = getPlayer(server, sender, sender.getName());
             Item item = getItemByText(sender, "minecraft:wooden_hoe");
             ItemStack itemstack = new ItemStack(item);
+            itemstack.setTagCompound(new NBTTagCompound());
+            itemstack.getTagCompound().setBoolean("Unbreakable", true);
             itemstack.setStackDisplayName(Reference.resetText+"Essential Wand");
             player.addItemStackToInventory(itemstack);
         }

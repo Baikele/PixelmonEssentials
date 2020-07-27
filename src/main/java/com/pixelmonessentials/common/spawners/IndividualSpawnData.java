@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public class IndividualSpawnData {
     private String speciesName;
+    private String[] specs;
     private int minLevel;
     private int maxLevel;
     private int rarity;
@@ -13,6 +14,7 @@ public class IndividualSpawnData {
 
     public IndividualSpawnData(){
         this.speciesName="";
+        this.specs=new String[0];
         this.minLevel=1;
         this.maxLevel=1;
         this.rarity=1;
@@ -25,6 +27,29 @@ public class IndividualSpawnData {
 
     public void setSpeciesName(String speciesName) {
         this.speciesName = speciesName;
+    }
+
+    public String[] getSpecs(){
+        return this.specs;
+    }
+
+    public String getSpecsString(){
+        String specs="";
+        for(int i=0;i<this.specs.length;i++){
+            specs+=this.specs[i];
+            if(i!=this.specs.length-1){
+                specs+=" ";
+            }
+        }
+        return specs;
+    }
+
+    public void setSpecs(String[] specs){
+        this.specs=specs;
+    }
+
+    public void setSpecs(String specs){
+        this.specs=specs.split(" ");
     }
 
     public int getMinLevel() {

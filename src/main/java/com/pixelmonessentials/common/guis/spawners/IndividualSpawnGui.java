@@ -2,16 +2,14 @@ package com.pixelmonessentials.common.guis.spawners;
 
 import com.pixelmonessentials.PixelmonEssentials;
 import com.pixelmonessentials.common.api.action.ActionData;
+import com.pixelmonessentials.common.api.action.datatypes.ActionIdData;
 import com.pixelmonessentials.common.api.gui.EssentialsButton;
 import com.pixelmonessentials.common.api.gui.EssentialsFormGui;
-import com.pixelmonessentials.common.api.gui.bases.EssentialsFormGuiBase;
+import com.pixelmonessentials.common.api.gui.EssentialsPersistentGui;
 import com.pixelmonessentials.common.api.gui.bases.EssentialsMultiselectScrollGuiBase;
-import com.pixelmonessentials.common.api.gui.bases.EssentialsScrollGuiBase;
 import com.pixelmonessentials.common.spawners.IndividualSpawnData;
 import com.pixelmonessentials.common.spawners.SpawnData;
 import com.pixelmonessentials.common.util.DaytimeUtils;
-import com.pixelmonessentials.common.util.EssentialsLogger;
-import com.pixelmonessentials.common.util.Reference;
 import com.pixelmonmod.pixelmon.config.PixelmonConfig;
 import com.pixelmonmod.pixelmon.enums.EnumSpecies;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -20,7 +18,6 @@ import noppes.npcs.api.wrapper.gui.CustomGuiScrollWrapper;
 import noppes.npcs.api.wrapper.gui.CustomGuiTextFieldWrapper;
 import noppes.npcs.api.wrapper.gui.CustomGuiWrapper;
 import noppes.npcs.controllers.CustomGuiController;
-import noppes.npcs.entity.EntityNPCInterface;
 
 import java.util.ArrayList;
 
@@ -39,12 +36,12 @@ public class IndividualSpawnGui extends EssentialsMultiselectScrollGuiBase imple
         super(1003, new int[]{301});
         this.spawnData=spawnData;
         this.data=data;
-        this.addButton(new EssentialsButton(503, new ActionData("OPEN_GUI", "null@"+1002)));
+        this.addButton(new EssentialsButton(503, new ActionIdData("OPEN_GUI", 1002)));
         this.submitButton=502;
-        this.addButton(new EssentialsButton(500, new ActionData("EDIT_TIMES", "")));
-        this.addButton(new EssentialsButton(501, new ActionData("CLEAR_TIMES", "")));
-        this.addButton(new EssentialsButton(504, new ActionData("RETURN_INDIVIDUAL", "")));
-        this.addButton(new EssentialsButton(505, new ActionData("CANCEL_TIMES", "")));
+        this.addButton(new EssentialsButton(500, new ActionData("EDIT_TIMES")));
+        this.addButton(new EssentialsButton(501, new ActionData("CLEAR_TIMES")));
+        this.addButton(new EssentialsButton(504, new ActionData("RETURN_INDIVIDUAL")));
+        this.addButton(new EssentialsButton(505, new ActionData("CANCEL_TIMES")));
     }
 
     public int getSubmitButton(){
@@ -81,6 +78,8 @@ public class IndividualSpawnGui extends EssentialsMultiselectScrollGuiBase imple
         gui.addLabel(201, "Add Species", 100, 5, 128, 20);
         gui.addLabel(202, "Name:", 40, 50, 128, 20);
         gui.addTextField(400, 73, 50, 80, 20).setText(this.spawnData.getSpeciesName());
+        gui.addLabel(208, "Specs:", 122, 50, 110, 20);
+        gui.addTextField(404, 157, 50, 90, 20).setText(this.spawnData.getSpecsString());
         gui.addLabel(203, "Min Level:", 20, 80, 128, 20);
         gui.addTextField(401, 73, 80, 35, 20).setText(this.spawnData.getMinLevel()+"");
         gui.addLabel(204, "Max Level:", 18, 110, 128, 20);
@@ -184,6 +183,10 @@ public class IndividualSpawnGui extends EssentialsMultiselectScrollGuiBase imple
         }
         else{
             this.spawnData.setSpeciesName(speciesName);
+            String specs=((CustomGuiTextFieldWrapper)gui.getComponent(404)).getText();
+            if(specs!=null){
+                this.spawnData.setSpecs(specs);
+            }
             this.spawnData.setMinLevel(minLevel);
             this.spawnData.setMaxLevel(maxLevel);
             this.spawnData.setRarity(rarity);
